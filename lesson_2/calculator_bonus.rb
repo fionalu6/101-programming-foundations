@@ -1,11 +1,11 @@
-# Ask for yaml
+# Bonus feature 4: Extracting messages
 require 'yaml'
 MESSAGES = YAML.load_file('calculator_messages.yml')
 
 # Define the default language
 LANGUAGE = 'en'
 
-# Initialize MESSAGES
+# Bonus feature 5: Multiple language
 def messages(message, lang='en')
   MESSAGES[lang][message]
 end
@@ -15,9 +15,14 @@ def prompt(message)
   puts "=> #{message}"
 end
 
-# Bonus Feature 1+2: Better integer validation
+# Bonus Feature 1: Better integer validation
 def valid_number?(number)
-  number.match(/\d/)
+  number.match(/^\d+$/)
+end
+
+# Bonus Feature 2: Accept float number
+def float?(input)
+  /\d/.match(input) && /^\d*\.?\d*$/.match(input)
 end
 
 # Convert the operator to message strings
@@ -59,7 +64,7 @@ loop do # main loop
     prompt(messages('first_num', LANGUAGE))
     num1 = gets.chomp
 
-    if valid_number?(num1)
+    if float?(num1)
       break
     else
       prompt(messages('valid_num', LANGUAGE))
@@ -71,7 +76,7 @@ loop do # main loop
     prompt(messages('second_num', LANGUAGE))
     num2 = gets.chomp
 
-    if valid_number?(num2)
+    if float?(num2)
       break
     else
       prompt(messages('valid_num', LANGUAGE))
